@@ -12,6 +12,10 @@ app.get('/', async(req, res) => {
     await send(text)
 })
 
+app.post('/', async(req, res) => {
+    res.send(req.body.challenge)
+})
+
 app.post('/slack/events', async(req, res) => {
     res.sendStatus(200)
     await send(`event: ${res.body.event}, type: ${res.body.type}, text: ${res.body.event.text}`)
