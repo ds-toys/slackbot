@@ -1,38 +1,22 @@
+const express = require('express')
+const send = require('./slack/index')
+const app = express()
 require('dotenv').config()
-const axios = require('axios')
-const qs = require('qs')
-const { SlackAdapter } = require('botbuilder-adapter-slack');
-let { Botkit } = require('botkit');
+const PORT = process.env.PORT || 3003
 
-const SLACK_ACCESS_TOKEN = process.env.SLACK_ACCESS_TOKEN
-const SLACK_SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET
+app.use(express.json())
 
-const adapter = new SlackAdapter({
-    verificationToken: process.env.SLACK_VERIFY_TOKEN,
-    clientSigningSecret: SLACK_SIGNING_SECRET,
-    botToken: SLACK_ACCESS_TOKEN
+app.get('/', async(req, res) => {
+    const text = req.query.text
+    res.send(text)
+    await send(text)
 })
 
-const controller = new Botkit({
-    adapter,
-    // ...other options
-});
+app.post('/slack/events', async(req, res) => {
+    res.sendStatus(200)
+    await send(`event: ${res.body.event}, type: ${res.body.type}, text: ${res.body.event.text}`)
+})
 
-controller.on('message', async(bot, message) => {
-    await bot.reply(message, 'I heard a message!');
-});
-
-
-const send = async(message) => {
-    await axios.post('https://slack.com/api/chat.postMessage', qs.stringify({
-        token: SLACK_ACCESS_TOKEN,
-        channel: 'bot-test',
-        text: message
-    })).then((res) => {
-        console.log(res.data)
-    }).catch((error) => {
-        console.log(error)
-    })
-}
-
-// send('Hi')
+app.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`, )
+})

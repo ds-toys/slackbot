@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
     "botbuilder-adapter-slack": "^1.0.13",
     "botkit": "^4.10.0",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "qs": "^6.10.1",
     "slack-node": "^0.1.8"
   },
