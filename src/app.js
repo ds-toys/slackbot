@@ -18,7 +18,7 @@ app.post('/', async(req, res) => {
 
 app.post('/slack/events', async(req, res) => {
     res.sendStatus(200)
-    await send(`event: ${res.body.event}, type: ${res.body.type}, text: ${res.body.event.text}`)
+    await send(`event: ${req.body.event}, type: ${req.body.type}, text: ${req.body.event.text}`)
 })
 
 app.listen(PORT, () => {
