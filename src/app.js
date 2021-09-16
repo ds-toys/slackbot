@@ -26,7 +26,7 @@ app.post('/slack/events', async(req, res) => {
         }
 
         if(eventText.includes('점심') || eventText.includes('밥')){
-            await send(`추천 메뉴: ${recommends}`)
+            await send(`추천 메뉴: ${recommends()}`)
         }
     }
     res.sendStatus(200)
