@@ -9,8 +9,6 @@ const send = async(message) => {
     await axios.post('https://slack.com/api/chat.postMessage', qs.stringify({
         token: SLACK_ACCESS_TOKEN,
         channel: 'bot-test',
-        icon_emoji: ':robot_face:',
-        as_user: false,
         text: message
     })).then((res) => {
         console.log(res.data)
