@@ -17,8 +17,11 @@ app.post('/', async(req, res) => {
 })
 
 app.post('/slack/events', async(req, res) => {
-    res.send(req.body.challenge)
-    await send(`event: ${req.body.event}, type: ${req.body.type}, text: ${req.body.event.text}`)
+    if(req.body.type === 'event_callback' && req.body.event.type === "message") {
+        if(req.body.event.text === 'Hello')
+        await send(`World!`)
+    }
+    res.sendStatus(200)
 })
 
 app.listen(PORT, () => {
