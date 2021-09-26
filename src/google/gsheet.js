@@ -15,10 +15,13 @@ const gsheet = async() => {
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
     console.log(sheet.title);
     console.log(sheet.rowCount);
+
+    const rows = await sheet.getRows(); // can pass in { limit, offset }
+    console.log(rows)
     
-    // adding / removing sheets
-    const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
-    await newSheet.delete();
+    // // adding / removing sheets
+    // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
+    // await newSheet.delete();
 }
 
 gsheet().catch(e => console.log('!!!!', e));;
