@@ -10,14 +10,16 @@ const gsheet = async() => {
     
     await doc.loadInfo(); // loads document properties and worksheets
     console.log(doc.title);
-    await doc.updateProperties({ title: 'renamed doc' });
+    // await doc.updateProperties({ title: 'renamed doc' });
     
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
     console.log(sheet.title);
     console.log(sheet.rowCount);
 
     const rows = await sheet.getRows(); // can pass in { limit, offset }
-    console.log(rows)
+    rows.forEach(row => {
+        console.log(row.ID, row.Name)
+    })
     
     // // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });

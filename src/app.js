@@ -47,9 +47,9 @@ app.post('/slack/events', async(req, res) => {
 })
 
 const recommends = async() => {
-    const PLACE_ID = 1067394552
+    const PLACE_ID = 1373936811
     const recommendPlace = await place(PLACE_ID)
-    console.log(recommendPlace.name)
+    console.log(recommendPlace.name, recommendPlace.categories)
     return `${recommendPlace.id}, ${recommendPlace.name}`
 }
 

@@ -7,7 +7,7 @@ const place = async(placeId) => {
             lang:'ko'
         }
     }).then((res) => {
-        console.log(res.data.id)
+        // console.log(res.data)
         return res.data
     }).catch((error) => {
         console.log(error)
