@@ -17,8 +17,8 @@ const gsheet = async() => {
     console.log(sheet.rowCount);
 
     const rows = await sheet.getRows(); // can pass in { limit, offset }
-    rows.forEach(row => {
-        console.log(row.ID, row.Name)
+    rows.forEach((row, index) => {
+        console.log(index, row.ID, row.Name)
     })
     
     // // adding / removing sheets
