@@ -7,8 +7,7 @@ const place = async(placeId) => {
             lang:'ko'
         }
     }).then((res) => {
-        // console.log(res.data)
-        return res.data
+        return `\n${res.data.name.padEnd(35)} ${res.data.categories} https://map.naver.com/v5/entry/place/${res.data.id}`
     }).catch((error) => {
         console.log(error)
     })
