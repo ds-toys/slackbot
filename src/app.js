@@ -55,8 +55,6 @@ const recommends = async() => {
         return await place(id)
     })
     let rPlaces = await Promise.all(promises);
-    console.log('pl', rPlaces)
-
     return rPlaces
 }
 
