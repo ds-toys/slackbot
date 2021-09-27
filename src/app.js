@@ -42,7 +42,8 @@ app.post('/slack/events', async(req, res) => {
         }
 
         if(eventText === '점심' || eventText === '밥'){
-            await send(`✨추천 메뉴✨${recommends()}`)
+            const menu = await recommends()
+            await send(`✨추천 메뉴✨ ${menu}`)
         }
     }
     res.sendStatus(200)
