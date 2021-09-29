@@ -21,6 +21,17 @@ app.post('/', async(req, res) => {
     const eventType = req.body.event.type
     const eventText = req.body.event.text
     if(bodyType === 'event_callback' && eventType === "message") {
+        const restaurants = await gsheet()
+        console.log(eventText)
+        const found = restaurants.find(({id, name}) => {
+            return name === eventText
+        })
+        console.log(found)
+        if(found) {
+            const rPlace = await place(found.id)
+            return send(rPlace)
+        }
+
         if(eventText === 'Hello') {
             await send(`World!`)
         }
@@ -37,6 +48,16 @@ app.post('/slack/events', async(req, res) => {
     const eventType = req.body.event.type
     const eventText = req.body.event.text
     if(bodyType === 'event_callback' && eventType === "message") {
+        const restaurants = await gsheet()
+        const found = restaurants.find(({id, name}) => {
+            return name === eventText
+        })
+        
+        if(found.length) {
+            await send(found.id)
+            return
+        }
+
         if(eventText === 'Hello') {
             await send(`World!`)
         }
