@@ -21,7 +21,27 @@ app.post('/', async(req, res) => {
     const eventType = req.body.event.type
     const eventText = req.body.event.text
     if(bodyType === 'event_callback' && eventType === "message") {
+        if(eventText === 'Hello') {
+            await send(`World!`)
+            return
+        }
+
+        if(eventText === '점심' || eventText === '밥'){
+            const menu = await recommends()
+            await send(`✨추천 메뉴✨ ${menu}`)
+            return
+        }
+
         const restaurants = await gsheet()
+
+        if(eventText === '리스트' || eventText === '전체') {
+            const promises = restaurants.map(async (restaurant) => {
+                return await place(restaurant.id)
+            })
+            const list = await Promise.all(promises)
+            await send(list.toString())
+            return 
+        }
 
         const found = restaurants.find(({id, name}) => {
             return name === eventText
@@ -29,16 +49,8 @@ app.post('/', async(req, res) => {
 
         if(found) {
             const rPlace = await place(found.id)
-            return send(rPlace)
-        }
-
-        if(eventText === 'Hello') {
-            await send(`World!`)
-        }
-
-        if(eventText === '점심' || eventText === '밥'){
-            const menu = await recommends()
-            await send(`✨추천 메뉴✨ ${menu}`)
+            await send(rPlace)
+            return
         }
     }
 })
@@ -48,7 +60,27 @@ app.post('/slack/events', async(req, res) => {
     const eventType = req.body.event.type
     const eventText = req.body.event.text
     if(bodyType === 'event_callback' && eventType === "message") {
+        if(eventText === 'Hello') {
+            await send(`World!`)
+            return
+        }
+
+        if(eventText === '점심' || eventText === '밥'){
+            const menu = await recommends()
+            await send(`✨추천 메뉴✨ ${menu}`)
+            return
+        }
+
         const restaurants = await gsheet()
+
+        if(eventText === '리스트' || eventText === '전체') {
+            const promises = restaurants.map(async (restaurant) => {
+                return await place(restaurant.id)
+            })
+            const list = await Promise.all(promises)
+            await send(list.toString())
+            return 
+        }
 
         const found = restaurants.find(({id, name}) => {
             return name === eventText
@@ -56,17 +88,10 @@ app.post('/slack/events', async(req, res) => {
 
         if(found) {
             const rPlace = await place(found.id)
-            return send(rPlace)
+            await send(rPlace)
+            return
         }
-
-        if(eventText === 'Hello') {
-            await send(`World!`)
-        }
-
-        if(eventText === '점심' || eventText === '밥'){
-            const menu = await recommends()
-            await send(`✨추천 메뉴✨ ${menu}`)
-        }
+        
     }
     res.sendStatus(200)
 })
