@@ -56,6 +56,7 @@ app.post('/', async(req, res) => {
 })
 
 app.post('/slack/events', async(req, res) => {
+    res.sendStatus(200)
     const bodyType = req.body.type
     const eventType = req.body.event.type
     const eventText = req.body.event.text
@@ -98,7 +99,7 @@ app.post('/slack/events', async(req, res) => {
         }
         
     }
-    res.sendStatus(200)
+    
 })
 
 const recommends = async() => {
