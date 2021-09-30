@@ -78,7 +78,7 @@ app.post('/slack/events', async(req, res) => {
                 return await place(restaurant.id)
             })
             const list = await Promise.all(promises)
-            await send('🍕🍔🍟🌭🍿🥗 전체 리스트 🥙🥪🍗🍘🍙🍛🍜', list.toString())
+            await send('🍕🍔🍟🌭🍿🥗 전체 리스트 🥙🥪🍗🍘🍙🍛🍜' + list.toString())
             return 
         }
 
