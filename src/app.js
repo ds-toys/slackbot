@@ -26,6 +26,11 @@ app.post('/', async(req, res) => {
             return
         }
 
+        if(eventText === '명령어') {
+            await send(`Hello \n점심 또는 밥 \n리스트 또는 전체 \n[식당이름]`)
+            return
+        }
+
         if(eventText === '점심' || eventText === '밥'){
             const menu = await recommends()
             await send(`✨추천 메뉴✨ ${menu}`)
@@ -135,7 +140,7 @@ const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-  }
+}
 
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`, )
